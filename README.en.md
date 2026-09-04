@@ -12,28 +12,43 @@ The central rule is:
 execution ability != decision authority
 ```
 
-Workspace Ops is an opinionated reference governance model for organizing AI-assisted engineering around **bounded execution, evidence, explicit state transitions, independent review, and human-controlled authority**.
+Workspace Ops is an opinionated reference governance model for organizing AI-assisted engineering around **bounded execution, ownership-aware scope, evidence-backed state, explicit gates, independent review, and human-controlled authority**.
 
 ## What It Models
 
-Workspace Ops is built around six primitives:
+Workspace Ops is built around seven primitives:
 
 - **Authority** — who may decide.
-- **Scope** — what the executor may change.
+- **Ownership** — which project, track, domain, or artifact that authority applies to.
+- **Scope** — what the executor may change or observe.
 - **State** — what state the work has actually reached.
 - **Evidence** — what proves a state claim.
-- **Gate** — what authorizes the next transition.
+- **Gate** — what evidence and authority are required for the next transition.
 - **Boundary** — where execution must stop, escalate, or hand off.
 
 These distinctions prevent category errors such as:
 
 ```text
 can implement != can accept
+observe != own
 verified != accepted
 review pass != promoted
 promotion authorized != promoted
 promoted != deployed
 ```
+
+## Ownership and Routing
+
+Visibility into another project or track does not imply mutation authority.
+
+```text
+visibility != ownership
+observe != own
+consumer need != provider authority
+routing != authorization
+```
+
+Workspace Ops treats multi-agent work as an **ownership-preserving routing problem**, not merely as a list of roles. A consumer owns its need, a provider owns provider-local work, and provider delivery still does not authorize consumer integration automatically.
 
 ## Execution Modes
 
@@ -47,18 +62,28 @@ The public baseline defines five reusable execution modes:
 
 `NONSTOP_BOUNDED` means **pre-authorized bounded continuation**. It does not mean unrestricted autonomous development.
 
-The authorized range must be finite, and these boundaries remain binding:
+```text
+HUMAN_GATED vs NONSTOP_BOUNDED
+= different review cadence
+!= different safety / authority model
+```
 
-- scope expansion
-- ownership / authority boundaries
-- destructive operations
-- evidence conflicts
-- architecture or human-judgment requirements
-- promotion / deployment authorization
+The authorized range must remain finite, and stop conditions such as scope expansion, ownership or authority boundaries, destructive actions, evidence conflicts, architecture or human-judgment requirements, and promotion/deployment authorization remain binding.
 
 ## State and Gates
 
-A typical successful path can be represented as:
+Workspace Ops does not flatten all progress labels into one executor-controlled enum.
+
+At minimum it distinguishes orthogonal planes such as:
+
+```text
+Execution state
+Review state
+Decision / acceptance state
+Operational state
+```
+
+A typical successful narrative can be represented as:
 
 ```text
 IMPLEMENTED
@@ -71,9 +96,26 @@ IMPLEMENTED
   -> DEPLOYED
 ```
 
-This is not a single self-advancing state machine.
+This is not a single self-advancing state machine. Different transitions may belong to different authorities and gates.
 
-Different transitions may belong to different authorities and gates. Evidence can support a transition, but evidence alone does not authorize it.
+## Evidence and Provenance
+
+Evidence can establish facts, but it does not create authorization.
+
+```text
+Evidence establishes facts.
+Evidence does not grant authority.
+```
+
+Tests, CI, Git provenance, browser/runtime acceptance, review artifacts, and deployment health should be interpreted together with their candidate/target, procedure, freshness, and environment.
+
+```text
+old observed ref != permanent authority
+static inspection != runtime execution
+Linux pass != Windows pass
+```
+
+Before sensitive mutation, the live state that materially affects the authorization assumptions should be revalidated.
 
 ## Human Review
 
@@ -108,19 +150,7 @@ Live repository/runtime state
 Current human instruction
 ```
 
-Reusable prompts define role and behavior contracts. Current SHAs, branches, worktrees, runtime targets, blockers, and similar volatile values belong in the Execution Envelope or live state.
-
-## Multi-project / Multi-agent Boundaries
-
-Visibility into another project or track does not imply mutation authority.
-
-```text
-observe != own
-consumer need != provider authority
-dependency discovery != provider implementation authorization
-```
-
-Frontend, backend, infrastructure, security, review, and operations agents may work in parallel while retaining separate execution and ownership boundaries.
+Reusable prompts define stable role and behavior routing. Current SHAs, branches, worktrees, runtime targets, blockers, and similar volatile values belong in the Execution Envelope or are resolved from live state.
 
 ## Repository Guide
 
@@ -129,12 +159,16 @@ For a first read, start here:
 - [Concepts](docs/CONCEPTS.md)
 - [Quickstart](docs/QUICKSTART.md)
 - [Authority Model](governance/AUTHORITY_MODEL.md)
+- [Ownership and Routing](governance/OWNERSHIP_AND_ROUTING.md)
 - [State and Gates](governance/STATE_AND_GATES.md)
+- [Evidence and Provenance](governance/EVIDENCE_AND_PROVENANCE.md)
 - [Execution Modes](governance/EXECUTION_MODES.md)
 - [Human Review](governance/HUMAN_REVIEW.md)
 - [Execution Envelope](governance/EXECUTION_ENVELOPE.md)
+- [Failure and Repair](governance/FAILURE_AND_REPAIR.md)
 - [Boundaries and Stop Conditions](governance/BOUNDARIES_AND_STOP_CONDITIONS.md)
 - [Prompt Governance](governance/PROMPT_GOVERNANCE.md)
+- [Toolkit Direction](toolkit/README.md)
 - [Public Disclosure](docs/PUBLIC_DISCLOSURE.md)
 
 Reusable prompt templates live under [`prompts/templates`](prompts/templates/).
@@ -154,11 +188,18 @@ governance
 -> multi-project orchestration
 ```
 
-The current `toolkit/` directory documents only a provisional surface. A CLI or orchestration engine should not define governance before the governance contract exists.
+The `toolkit/` directory describes the future **reference tooling surface that consumes and validates the governance model**. A CLI or orchestration engine should not define governance before the governance contract exists.
 
 ## Positioning
 
 Workspace Ops is **one practical approach / reference governance model** for AI-assisted SDLC governance.
+
+The thesis can be summarized as:
+
+```text
+It governs not what an AI can technically do,
+but what it is authorized to decide, mutate, and advance.
+```
 
 It is not presented as an:
 
