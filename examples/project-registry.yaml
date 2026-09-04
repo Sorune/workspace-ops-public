@@ -1,0 +1,41 @@
+projects:
+  - id: example-api
+    repository: example-api
+    authority:
+      project: human
+      acceptance: human
+      promotion: human
+      deployment: human
+    tracks:
+      backend:
+        owns:
+          - api-implementation
+        observes:
+          - shared-contracts
+
+  - id: example-web
+    repository: example-web
+    authority:
+      project: human
+      acceptance: human
+      promotion: human
+      deployment: human
+    tracks:
+      frontend:
+        owns:
+          - web-client
+        observes:
+          - example-api-public-contract
+
+  - id: example-infra
+    repository: example-infra
+    authority:
+      project: human
+      operations: infra-operator
+      deployment: human
+
+relationships:
+  - consumer: example-web
+    provider: example-api
+    contract: public-api
+    rule: consumer_need_does_not_grant_provider_authority

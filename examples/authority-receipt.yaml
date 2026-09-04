@@ -1,0 +1,32 @@
+authority_receipt:
+  version: provisional-v0
+  action: promote
+
+  target:
+    project: example-app
+    candidate: candidate-reference
+
+  authorized_by:
+    type: human
+    reference: review-decision-042
+
+  scope:
+    includes:
+      - merge_candidate_to_canonical
+    excludes:
+      - production_deploy
+      - destructive_cleanup
+
+  preconditions:
+    - candidate_remains_reviewed
+    - canonical_ancestry_is_valid
+    - working_state_is_preserved
+
+  expires:
+    when:
+      - candidate_changes
+      - canonical_base_invalidates_authorization
+      - human_revokes
+
+  note: >
+    Promotion authorization is not deployment authorization.

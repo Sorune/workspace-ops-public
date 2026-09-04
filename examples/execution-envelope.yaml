@@ -1,0 +1,39 @@
+execution:
+  id: STEP-042
+  mode: HUMAN_GATED
+  kind: implementation
+  objective: Add idempotent request handling to the example API.
+
+target:
+  project: example-api
+  repository: example-api
+  track: backend
+
+canonical:
+  branch: main
+  expected_ref: observed-reference-before-execution
+
+scope:
+  owns:
+    - request-handler
+    - request-handler-tests
+  observes:
+    - public-api-contract
+  prohibited:
+    - database-topology
+    - deployment-configuration
+
+verification:
+  required:
+    - unit-tests
+    - integration-tests
+
+authority:
+  acceptance: human
+  promotion: human
+  deployment: human
+
+stop:
+  after_current_unit: true
+  on_scope_expansion: true
+  on_authority_ambiguity: true
