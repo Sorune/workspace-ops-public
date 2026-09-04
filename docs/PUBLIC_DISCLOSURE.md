@@ -26,7 +26,7 @@ It does not publish:
 ```text
 credentials or secrets
 private keys
-machine/user identifiers
+private machine identifiers or local OS user identifiers
 private network topology
 live deployment targets
 private project registries
@@ -39,6 +39,8 @@ unpublished private roadmaps
 private dependency graphs
 private Git history
 ```
+
+Public GitHub account identity and repository ownership are naturally visible as part of this public repository and are not considered private operational identifiers under this disclosure.
 
 ## Examples
 
