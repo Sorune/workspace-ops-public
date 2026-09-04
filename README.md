@@ -1,29 +1,31 @@
 # Workspace Ops
 
-A human-gated governance framework for AI-assisted software development.
+[한국어](./README.md) · [English](./README.en.md)
 
-AI can perform substantial implementation work. That capability does not automatically grant authority to accept, promote, deploy, expand scope, or take ownership of adjacent projects.
+AI-assisted software development를 위한 **human-gated governance framework**입니다.
 
-The central rule is:
+AI는 상당한 규모의 구현 작업을 수행할 수 있습니다. 하지만 그 실행 능력이 acceptance, promotion, deployment, scope expansion, 또는 인접 프로젝트의 ownership을 자동으로 부여하지는 않습니다.
+
+핵심 원칙은 다음과 같습니다.
 
 ```text
 execution ability != decision authority
 ```
 
-Workspace Ops is an opinionated reference governance model for organizing AI-assisted engineering around bounded execution, evidence, explicit state transitions, independent review, and human-controlled authority.
+Workspace Ops는 AI-assisted engineering을 **bounded execution, evidence, explicit state transitions, independent review, human-controlled authority**를 중심으로 구성하기 위한 opinionated reference governance model입니다.
 
-## What it models
+## 무엇을 모델링하는가
 
-Workspace Ops uses six primitives:
+Workspace Ops는 여섯 가지 primitive를 중심으로 합니다.
 
-- **Authority** — who may decide.
-- **Scope** — what the executor may change.
-- **State** — what the work has actually reached.
-- **Evidence** — what supports a state claim.
-- **Gate** — what authorizes the next transition.
-- **Boundary** — where execution must stop, escalate, or hand off.
+- **Authority** — 누가 결정할 수 있는가.
+- **Scope** — executor가 무엇을 변경할 수 있는가.
+- **State** — 작업이 실제로 어떤 상태에 도달했는가.
+- **Evidence** — 해당 state claim을 무엇이 증명하는가.
+- **Gate** — 다음 transition을 무엇이 승인하는가.
+- **Boundary** — 어디에서 실행을 멈추고 escalate 또는 handoff해야 하는가.
 
-These primitives prevent common category errors:
+이 구분은 다음과 같은 category error를 방지합니다.
 
 ```text
 can implement != can accept
@@ -33,9 +35,9 @@ promotion authorized != promoted
 promoted != deployed
 ```
 
-## Execution modes
+## Execution Modes
 
-The baseline defines five reusable modes:
+Public baseline은 다섯 가지 reusable execution mode를 정의합니다.
 
 - `ANALYSIS_ONLY`
 - `HUMAN_GATED`
@@ -43,11 +45,20 @@ The baseline defines five reusable modes:
 - `REVIEW_ONLY`
 - `OPERATION_ONLY`
 
-`NONSTOP_BOUNDED` means **pre-authorized bounded continuation**. It does not mean unrestricted autonomous development. The range must be finite, and authority, ownership, destructive-operation, evidence-conflict, and human-judgment boundaries remain binding.
+`NONSTOP_BOUNDED`는 **pre-authorized bounded continuation**을 의미합니다. unrestricted autonomous development를 의미하지 않습니다.
 
-## State and gates
+실행 범위는 유한해야 하며 다음 boundary는 계속 유효합니다.
 
-A typical successful path is:
+- scope expansion
+- ownership / authority boundary
+- destructive operation
+- evidence conflict
+- architecture or human judgment requirement
+- promotion / deployment authorization
+
+## State와 Gate
+
+일반적인 successful path는 다음과 같이 표현할 수 있습니다.
 
 ```text
 IMPLEMENTED
@@ -60,43 +71,79 @@ IMPLEMENTED
   -> DEPLOYED
 ```
 
-This is not a single self-advancing state machine. Different transitions belong to different authorities. Evidence can support a transition without authorizing it.
+하지만 이것은 하나의 self-advancing state machine이 아닙니다.
 
-## Human review
+각 transition은 서로 다른 authority와 gate에 의해 결정될 수 있습니다. Evidence는 transition을 뒷받침할 수 있지만, 그 자체로 authorization이 되지는 않습니다.
 
-Human Review is not reduced to an approval button. Depending on the project, it can include:
+## Human Review
 
-- evidence inspection;
-- acceptance-criteria verification;
-- semantic correctness judgment;
-- scope and ownership review;
-- repair classification;
-- architecture decisions;
-- promotion authorization;
-- deployment authorization.
+Human Review는 단순한 approval button이 아닙니다.
 
-Agent-generated evidence and human acceptance are intentionally distinct.
+프로젝트에 따라 다음을 포함할 수 있습니다.
 
-## Repository guide
+- evidence inspection
+- acceptance criteria verification
+- semantic correctness judgment
+- scope / ownership review
+- repair classification
+- architecture decision
+- promotion authorization
+- deployment authorization
 
-Start here:
+Agent-generated evidence와 Human acceptance는 의도적으로 분리됩니다.
+
+## Execution Envelope
+
+Stable governance와 현재 작업의 volatile state를 분리합니다.
+
+```text
+Persistent governance
+        +
+Reusable prompt
+        +
+Execution envelope
+        +
+Live repository/runtime state
+        +
+Current human instruction
+```
+
+Reusable prompt에는 role과 behavior contract를 두고, 현재 SHA, branch, worktree, runtime target, current blocker 같은 값은 Execution Envelope 또는 live state에서 주입합니다.
+
+## Multi-project / Multi-agent Boundary
+
+다른 프로젝트나 track을 볼 수 있다는 사실은 mutation authority를 의미하지 않습니다.
+
+```text
+observe != own
+consumer need != provider authority
+dependency discovery != provider implementation authorization
+```
+
+Frontend, backend, infrastructure, security, review, operations 등 여러 agent가 병렬로 동작하더라도 각자의 execution boundary와 ownership boundary는 독립적으로 유지됩니다.
+
+## Repository Guide
+
+처음 읽는다면 다음 순서를 권장합니다.
 
 - [Concepts](docs/CONCEPTS.md)
 - [Quickstart](docs/QUICKSTART.md)
-- [Authority model](governance/AUTHORITY_MODEL.md)
-- [State and gates](governance/STATE_AND_GATES.md)
-- [Execution modes](governance/EXECUTION_MODES.md)
+- [Authority Model](governance/AUTHORITY_MODEL.md)
+- [State and Gates](governance/STATE_AND_GATES.md)
+- [Execution Modes](governance/EXECUTION_MODES.md)
 - [Human Review](governance/HUMAN_REVIEW.md)
 - [Execution Envelope](governance/EXECUTION_ENVELOPE.md)
-- [Boundaries and stop conditions](governance/BOUNDARIES_AND_STOP_CONDITIONS.md)
-- [Prompt governance](governance/PROMPT_GOVERNANCE.md)
-- [Public disclosure](docs/PUBLIC_DISCLOSURE.md)
+- [Boundaries and Stop Conditions](governance/BOUNDARIES_AND_STOP_CONDITIONS.md)
+- [Prompt Governance](governance/PROMPT_GOVERNANCE.md)
+- [Public Disclosure](docs/PUBLIC_DISCLOSURE.md)
 
-Reusable prompt templates live under [`prompts/templates`](prompts/templates/). Synthetic examples live under [`examples`](examples/).
+Reusable prompt template은 [`prompts/templates`](prompts/templates/)에 있습니다.
 
-## Contracts before tooling
+Synthetic example은 [`examples`](examples/)에 있습니다.
 
-The implementation direction is deliberately staged:
+## Contracts Before Tooling
+
+Workspace Ops의 구현 순서는 의도적으로 다음과 같이 잡습니다.
 
 ```text
 governance
@@ -107,8 +154,22 @@ governance
 -> multi-project orchestration
 ```
 
-The `toolkit/` directory currently documents a provisional surface only. The governance contract comes first.
+현재 `toolkit/`은 provisional surface만 문서화합니다. CLI나 orchestration engine이 governance를 먼저 정의하게 하지 않습니다.
 
 ## Positioning
 
-Workspace Ops is one practical approach to AI-assisted SDLC governance. It is not presented as an industry standard, a universal process, or a fully autonomous development framework.
+Workspace Ops는 AI-assisted SDLC governance를 위한 **one practical approach / reference governance model**입니다.
+
+다음과 같이 주장하지 않습니다.
+
+```text
+industry standard
+universal framework
+fully autonomous development
+```
+
+실제 private AI-assisted development workflow에서 얻은 운영 경험을 일반화한 것이지만, 이 repository는 private workspace의 공개본이나 mirror가 아닙니다. 자세한 내용은 [Public Disclosure](docs/PUBLIC_DISCLOSURE.md)를 참고하세요.
+
+## License
+
+Apache License 2.0. 자세한 내용은 [LICENSE](./LICENSE)를 참고하세요.
