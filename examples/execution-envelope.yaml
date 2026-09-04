@@ -13,6 +13,11 @@ canonical:
   branch: main
   expected_ref: observed-reference-before-execution
 
+ownership:
+  owner: backend-track
+  decision_owner: example-api-orchestrator
+  review_owner: independent-review
+
 scope:
   owns:
     - request-handler
@@ -36,4 +41,5 @@ authority:
 stop:
   after_current_unit: true
   on_scope_expansion: true
+  on_ownership_ambiguity: true
   on_authority_ambiguity: true
