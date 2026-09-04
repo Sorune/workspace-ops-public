@@ -2,6 +2,8 @@
 
 The default mode is `HUMAN_GATED` unless project governance selects a stricter default.
 
+Execution modes define a **delegation and review-cadence contract**. They do not replace authority, ownership, evidence, or stop-condition rules.
+
 ## ANALYSIS_ONLY
 
 Purpose:
@@ -54,6 +56,18 @@ NONSTOP_BOUNDED
 != unrestricted autonomous development
 ```
 
+The important distinction is cadence, not a weaker safety model:
+
+```text
+HUMAN_GATED
+= review after the current authorized unit
+
+NONSTOP_BOUNDED
+= review at the bounded terminal point unless an earlier stop condition fires
+```
+
+Both retain the same authority, ownership, preservation, destructive-action, promotion, and deployment boundaries.
+
 The authorization must define at least one finite boundary:
 
 - explicit step list;
@@ -103,6 +117,11 @@ INSUFFICIENT_EVIDENCE
 
 A reviewer may produce review evidence when authorized, but should not silently fix the reviewed implementation.
 
+```text
+self-verification != independent review
+review authority != implementation ownership
+```
+
 ## OPERATION_ONLY
 
 Purpose: execute a bounded operation that the correct authority has already authorized.
@@ -117,3 +136,7 @@ Typical operations:
 - observability verification.
 
 Before mutation, the operator re-checks relevant live state. If the real state no longer matches the authorization assumptions, the operator stops rather than improvising a new decision.
+
+```text
+operation capability != operation decision authority
+```
