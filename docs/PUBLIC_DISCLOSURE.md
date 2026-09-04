@@ -52,6 +52,40 @@ Names such as `example-app`, `example-api`, and `example-infra` are illustrative
 
 The public repository uses independent Git history. Private commits are not transplanted as public provenance.
 
+## Product authority independence
+
+The private workspace is an origin and operational proving ground, not a permanent hidden authority over the public product.
+
+During early extraction, private operational experience may inform candidate public contracts through explicit review and generalization.
+
+As the public implementation matures, the public repository's own documented contracts, accepted implementation, and releases should become authoritative for public product behavior.
+
+A private operational environment may then consume the public product with private governance overlays, project state, machine state, or adapters that are intentionally not published.
+
+New private experience may produce a candidate improvement, but it does not silently change public semantics.
+
+```text
+PRIVATE EXPERIENCE
+!= AUTOMATIC PUBLIC AUTHORITY
+```
+
+This preserves both directions:
+
+```text
+early:
+private proving ground
+-> extraction / generalization
+-> public product
+
+mature:
+public product authority
+-> consumed by private environment
+
+private new friction
+-> explicit candidate / review
+-> possible public evolution
+```
+
 ## Publication model
 
 Publication is allowlist-based:
