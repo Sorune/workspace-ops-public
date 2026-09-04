@@ -6,11 +6,13 @@
 FAILURE != IMPLEMENTATION FAILURE
 ```
 
-A failing check is evidence that something is wrong. It is not yet an ownership classification.
+A failing check is evidence that something is wrong. It is not yet a root-cause or ownership classification.
 
-## Failure ownership classes
+## Failure attribution
 
-Workspace Ops uses explicit attribution such as:
+Projects should classify failure narrowly enough to route repair to the correct owner.
+
+Useful classes may include:
 
 ```text
 implementation defect
@@ -20,10 +22,11 @@ baseline defect
 integration defect
 review defect
 operations defect
+governance defect
 unknown / needs investigation
 ```
 
-Projects may add domain-specific classes.
+This list is illustrative rather than a mandatory universal taxonomy. Projects may add domain-specific classes or use a smaller set when the evidence does not justify finer attribution.
 
 ## Routing flow
 
@@ -80,10 +83,22 @@ identify the evidence
 identify the likely owner
 state the current impact
 do not mutate the other owner's scope
+route the repair or dependency to the owning authority
 ```
 
 The current executor may continue unrelated work already inside its authorization if the blocker is scoped and the execution mode allows it.
 
+See [`OWNERSHIP_AND_ROUTING.md`](OWNERSHIP_AND_ROUTING.md).
+
 ## Evidence conflict
 
-When tests, runtime observations, review evidence, and repository state disagree materially, do not select the most convenient explanation. Classify the conflict as unresolved and escalate to the authority that can decide the next repair scope.
+When tests, runtime observations, review evidence, and repository state disagree materially, do not select the most convenient explanation.
+
+```text
+preserve conflicting evidence
+-> classify known / unknown
+-> avoid stronger state claims
+-> route the unresolved repair or decision scope
+```
+
+See [`EVIDENCE_AND_PROVENANCE.md`](EVIDENCE_AND_PROVENANCE.md).
