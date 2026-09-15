@@ -175,6 +175,28 @@ Reusable prompt templates live under [`prompts/templates`](prompts/templates/).
 
 Synthetic examples live under [`examples`](examples/).
 
+## Related public product — WSP
+
+[`Sorune/wsp`](https://github.com/Sorune/wsp) is a **separate public semantic CLI product** for observing and interpreting local development workspaces. It normalizes Git/filesystem facts and explicit relations into a model exposed through Inspector and Lens projections.
+
+```text
+workspace-ops-public
+= governance / reference contracts / public-safe examples
+
+wsp
+= local workspace semantic product / CLI
+```
+
+Their responsibilities are intentionally separate.
+
+```text
+REFERENCE GOVERNANCE != PRODUCT IMPLEMENTATION AUTHORITY
+WSP PRODUCT != WORKSPACE OPS TOOLKIT IMPLEMENTATION
+OBSERVATION != GOVERNANCE AUTHORITY
+```
+
+`wsp` has no runtime dependency on `workspace-ops-public`, and this repository's `toolkit/` directory is not the WSP implementation repository. The current WSP `v0.1.0` release and installation guidance are available in [`Sorune/wsp`](https://github.com/Sorune/wsp).
+
 ## Contracts Before Tooling
 
 Workspace Ops deliberately follows this implementation order:

@@ -175,6 +175,28 @@ Reusable prompt template은 [`prompts/templates`](prompts/templates/)에 있습�
 
 Synthetic example은 [`examples`](examples/)에 있습니다.
 
+## Related public product — WSP
+
+[`Sorune/wsp`](https://github.com/Sorune/wsp)는 로컬 개발 workspace를 관찰하고 해석하는 **별도의 public semantic CLI product**입니다. Git/filesystem fact와 명시적 relation을 normalized model, Inspector, Lens projection으로 제공합니다.
+
+```text
+workspace-ops-public
+= governance / reference contracts / public-safe examples
+
+wsp
+= local workspace semantic product / CLI
+```
+
+두 repository의 책임은 의도적으로 분리되어 있습니다.
+
+```text
+REFERENCE GOVERNANCE != PRODUCT IMPLEMENTATION AUTHORITY
+WSP PRODUCT != WORKSPACE OPS TOOLKIT IMPLEMENTATION
+OBSERVATION != GOVERNANCE AUTHORITY
+```
+
+`wsp`는 `workspace-ops-public`에 runtime dependency를 두지 않으며, 이 repository의 `toolkit/` 역시 WSP의 구현 repository가 아닙니다. 현재 공개된 WSP `v0.1.0` release와 설치 방법은 [`Sorune/wsp`](https://github.com/Sorune/wsp)에서 확인할 수 있습니다.
+
 ## Contracts Before Tooling
 
 Workspace Ops의 구현 순서는 의도적으로 다음과 같이 잡습니다.
